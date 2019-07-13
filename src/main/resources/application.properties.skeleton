@@ -1,4 +1,8 @@
-openWeatherAPIKey: 
-units: metric
-city: Toulouse,fr
-forcastUrl: https://api.openweathermap.org/data/2.5/forecast
+forecast.APIKey: 
+forecast.units: metric
+forecast.city: Toulouse,fr
+forcast.url: https://api.openweathermap.org/data/2.5/forecast
+
+ifttt.url: https://maker.ifttt.com/trigger/{eventName}/with/key/{key}
+ifttt.key: 
+ifttt.eventName: weather_notification

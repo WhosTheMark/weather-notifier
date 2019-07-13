@@ -1,4 +1,4 @@
-package dev.whosthemark.weatherNotifier;
+package dev.whosthemark.weatherNotifier.connectors;
 
 import javax.annotation.PostConstruct;
 
@@ -10,18 +10,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 import dev.whosthemark.weatherNotifier.model.HourlyForecast;
 
 @Service
-public class WeatherForecastCaller {
+public class WeatherForecastConnector {
 
-	@Value("${forcastUrl}")
+	@Value("${forcast.url}")
 	private String forecastUrl;
 	
-	@Value("${city}")
+	@Value("${forecast.city}")
 	private String city;
 	
-	@Value("${openWeatherAPIKey}")
+	@Value("${forecast.APIKey}")
 	private String openWeatherAPIKey;
 	
-	@Value("${units}")
+	@Value("${forecast.units}")
 	private String units;
 	
 	private String expandedUrl;

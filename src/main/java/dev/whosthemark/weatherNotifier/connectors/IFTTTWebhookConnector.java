@@ -1,0 +1,38 @@
+package dev.whosthemark.weatherNotifier.connectors;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import dev.whosthemark.weatherNotifier.model.Notification;
+
+@Service
+public class IFTTTWebhookConnector {
+
+	@Value("${ifttt.url}")
+	private String ifttttUrl;
+
+	@Value("${ifttt.key}")
+	private String iftttKey;
+
+	@Value("${ifttt.eventName}")
+	private String eventName;
+
+	private RestTemplate restTemplate = new RestTemplate();
+
+	public void sendNotification(String message) {
+		
+		var notification = new Notification();
+		notification.setMessage("This is my message!");
+		
+		String result = restTemplate.postForObject(ifttttUrl, notification, String.class, eventName, iftttKey);
+		System.out.println(result);
+	}
+
+	@PostConstruct
+	public void init() {
+
+	}
+}
