@@ -1,0 +1,4 @@
+openWeatherAPIKey: 
+units: metric
+city: Toulouse,fr
+forcastUrl: https://api.openweathermap.org/data/2.5/forecast
