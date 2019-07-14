@@ -23,5 +23,5 @@ public class Forecast {
 
 	@Getter
 	@Setter
-	private String weatherCondition;
+	private WeatherCondition weatherCondition;
 }

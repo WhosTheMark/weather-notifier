@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 
 import dev.whosthemark.weatherNotifier.model.Forecast;
+import dev.whosthemark.weatherNotifier.model.WeatherCondition;
 
 public class ForecastDeserializer extends StdDeserializer<Forecast> {
 
@@ -39,7 +40,7 @@ public class ForecastDeserializer extends StdDeserializer<Forecast> {
 		var dateTime = getDateTime(node);
 		
 		Forecast forecast = new Forecast();
-		forecast.setWeatherCondition(weatherCondition);
+		forecast.setWeatherCondition(WeatherCondition.valueOf(weatherCondition));
 		forecast.setDateTime(dateTime);
 		forecast.setTemperature(temperature);
 
