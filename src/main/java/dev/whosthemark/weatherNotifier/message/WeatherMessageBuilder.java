@@ -1,33 +1,16 @@
 package dev.whosthemark.weatherNotifier.message;
 
-import java.util.List;
-
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import dev.whosthemark.weatherNotifier.model.Forecast;
-import dev.whosthemark.weatherNotifier.model.HourlyForecast;
-import dev.whosthemark.weatherNotifier.model.Notification;
 import dev.whosthemark.weatherNotifier.model.WeatherCondition;
 
 @Service
-public class NotificationBuilder {
+public class WeatherMessageBuilder {
 
-	public Notification buildMessage(HourlyForecast hourlyForecast) {
-
-		List<Forecast> forecasts = hourlyForecast.getForcasts();
-
-		var mostRecentForecast = forecasts.get(0);
-		
-		String nowMessage = "Maintenant : " + buildTemperatureMessage(mostRecentForecast)
-				+ buildWeatherConditionMessage(mostRecentForecast) + ". ";
-
-		var inAFewHoursForecast = forecasts.get(1);
-
-		String inAFewHoursMessage = "Dans quelques heures : " + buildTemperatureMessage(inAFewHoursForecast)
-				+ buildWeatherConditionMessage(inAFewHoursForecast);
-
-		return new Notification(nowMessage, inAFewHoursMessage);
+	public String buildWeatherMessage(Forecast forecast) {
+		return buildTemperatureMessage(forecast) + buildWeatherConditionMessage(forecast) + ". ";
 	}
 
 	private String buildTemperatureMessage(Forecast forecast) {
