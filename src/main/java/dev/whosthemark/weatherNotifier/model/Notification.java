@@ -10,6 +10,15 @@ public class Notification {
 	@Getter
 	@Setter
 	@JsonProperty("value1")
-	private String message;
+	private String nowForecast;
 
+	@Getter
+	@Setter
+	@JsonProperty("value2")
+	private String inAFewHoursForecast;
+
+	public Notification(String nowForecast, String inAFewHoursForecast) {
+		this.nowForecast = nowForecast;
+		this.inAFewHoursForecast = inAFewHoursForecast;
+	}
 }

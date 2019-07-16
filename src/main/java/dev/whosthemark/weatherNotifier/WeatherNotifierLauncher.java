@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import dev.whosthemark.weatherNotifier.connectors.IFTTTWebhookConnector;
 import dev.whosthemark.weatherNotifier.connectors.WeatherForecastConnector;
+import dev.whosthemark.weatherNotifier.message.NotificationBuilder;
+import dev.whosthemark.weatherNotifier.model.HourlyForecast;
+import dev.whosthemark.weatherNotifier.model.Notification;
 
 @Component
 public class WeatherNotifierLauncher {
@@ -17,9 +20,15 @@ public class WeatherNotifierLauncher {
 	@Autowired
 	private IFTTTWebhookConnector iftttConnector;
 
+	@Autowired
+	private NotificationBuilder builder;
+
 	@PostConstruct
 	public void init() {
+
+		HourlyForecast hourlyForecast = forecastConnector.getForecast();
+		Notification notification = builder.buildMessage(hourlyForecast);
 		System.out.println(forecastConnector.getForecast());
-		iftttConnector.sendNotification(null);
+		iftttConnector.sendNotification(notification);
 	}
 }
