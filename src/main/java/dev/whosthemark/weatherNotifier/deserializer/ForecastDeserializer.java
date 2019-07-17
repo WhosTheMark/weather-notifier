@@ -39,12 +39,7 @@ public class ForecastDeserializer extends StdDeserializer<Forecast> {
 		var weatherCondition = getWeatherCondition(node);
 		var dateTime = getDateTime(node);
 		
-		Forecast forecast = new Forecast();
-		forecast.setWeatherCondition(WeatherCondition.valueOf(weatherCondition));
-		forecast.setDateTime(dateTime);
-		forecast.setTemperature(temperature);
-
-		return forecast;
+		return new Forecast(temperature, dateTime, WeatherCondition.valueOf(weatherCondition));
 	}
 
 	private LocalDateTime getDateTime(TreeNode node) {

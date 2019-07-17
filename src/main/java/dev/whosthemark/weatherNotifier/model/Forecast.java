@@ -24,4 +24,15 @@ public class Forecast {
 	@Getter
 	@Setter
 	private WeatherCondition weatherCondition;
+
+	public Forecast(float temperature, LocalDateTime dateTime, WeatherCondition weatherCondition) {
+		this.temperature = temperature;
+		this.dateTime = dateTime;
+		this.weatherCondition = weatherCondition;
+	}
+
+	public Forecast(float temperature, WeatherCondition weatherCondition) {
+		this.temperature = temperature;
+		this.weatherCondition = weatherCondition;
+	}
 }

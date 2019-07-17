@@ -29,7 +29,7 @@ public class WeatherNotifierLauncher {
 	@PostConstruct
 	public void notifyWeather() {
 
-		HourlyForecast hourlyForecast = forecastConnector.getForecast();
+		HourlyForecast hourlyForecast = forecastConnector.getHourlyForecast();
 		Notification notification = buildNotification(hourlyForecast);
 		iftttConnector.sendNotification(notification);
 	}
@@ -40,11 +40,13 @@ public class WeatherNotifierLauncher {
 
 		// First forecast
 		var mostRecentForecast = forecasts.get(0);
-		String nowMessage = "Maintenant : " + builder.buildWeatherMessage(mostRecentForecast);
+		String nowMessage = "Maintenant : " + builder.buildWeatherMessage(mostRecentForecast.getTemperature(),
+				mostRecentForecast.getWeatherCondition());
 
 		// Second forecast
 		var inAFewHoursForecast = forecasts.get(1);
-		String inAFewHoursMessage = "Dans quelques heures : " + builder.buildWeatherMessage(inAFewHoursForecast);
+		String inAFewHoursMessage = "Dans quelques heures : " + builder
+				.buildWeatherMessage(inAFewHoursForecast.getTemperature(), inAFewHoursForecast.getWeatherCondition());
 
 		return new Notification(nowMessage, inAFewHoursMessage);
 	}

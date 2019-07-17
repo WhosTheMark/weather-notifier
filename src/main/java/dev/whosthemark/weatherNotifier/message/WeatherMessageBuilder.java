@@ -3,24 +3,21 @@ package dev.whosthemark.weatherNotifier.message;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import dev.whosthemark.weatherNotifier.model.Forecast;
 import dev.whosthemark.weatherNotifier.model.WeatherCondition;
 
 @Service
 public class WeatherMessageBuilder {
 
-	public String buildWeatherMessage(Forecast forecast) {
-		return buildTemperatureMessage(forecast) + buildWeatherConditionMessage(forecast) + ". ";
+	public String buildWeatherMessage(float temperature, WeatherCondition weatherCondition) {
+		return buildTemperatureMessage(temperature) + buildWeatherConditionMessage(weatherCondition) + ". ";
 	}
 
-	private String buildTemperatureMessage(Forecast forecast) {
-		float temperature = forecast.getTemperature();
+	private String buildTemperatureMessage(float temperature) {
 		return "Il fera " + temperature + " degrés. ";
 	}
 
 	@NonNull
-	private String buildWeatherConditionMessage(Forecast forecast) {
-		WeatherCondition weatherCondition = forecast.getWeatherCondition();
+	private String buildWeatherConditionMessage(WeatherCondition weatherCondition) {
 		String result = null;
 
 		switch (weatherCondition) {

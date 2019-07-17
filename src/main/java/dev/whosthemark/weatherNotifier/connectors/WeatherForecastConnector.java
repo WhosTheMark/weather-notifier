@@ -28,7 +28,7 @@ public class WeatherForecastConnector {
 	
 	private RestTemplate restTemplate = new RestTemplate();
 	
-	public HourlyForecast getForecast() {
+	public HourlyForecast getHourlyForecast() {
 		return restTemplate.getForObject(expandedUrl, HourlyForecast.class);
 	}
 	
