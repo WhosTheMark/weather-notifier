@@ -20,6 +20,7 @@ import org.mockito.MockitoAnnotations;
 
 import dev.whosthemark.weatherNotifier.connectors.IFTTTWebhookConnector;
 import dev.whosthemark.weatherNotifier.connectors.WeatherForecastConnector;
+import dev.whosthemark.weatherNotifier.exception.WeatherNotFoundException;
 import dev.whosthemark.weatherNotifier.message.WeatherMessageBuilder;
 import dev.whosthemark.weatherNotifier.model.Forecast;
 import dev.whosthemark.weatherNotifier.model.HourlyForecast;
@@ -48,7 +49,6 @@ public class WeatherNotifierLauncherTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-
 	private HourlyForecast getFixtureOk() {
 		Forecast firstForecast = new Forecast(25f, WeatherCondition.Rain);
 		Forecast secondForecast = new Forecast(30f, WeatherCondition.Clear);
@@ -59,8 +59,18 @@ public class WeatherNotifierLauncherTest {
 		return hourlyForecast;
 	}
 
+	private HourlyForecast getFixtureKO() {
+		Forecast firstForecast = new Forecast(25f, WeatherCondition.Snow);
+		Forecast secondForecast = new Forecast(30f, WeatherCondition.Snow);
+		List<Forecast> forcasts = List.of(firstForecast, secondForecast);
+
+		HourlyForecast hourlyForecast = new HourlyForecast();
+		hourlyForecast.setForcasts(forcasts);
+		return hourlyForecast;
+	}
+
 	@Test
-	public void test() {
+	public void testOK() {
 
 		HourlyForecast hourlyForecast = getFixtureOk();
 
@@ -88,6 +98,16 @@ public class WeatherNotifierLauncherTest {
 
 		assertEquals(notification.getNowForecast(), "Maintenant : Mon message");
 
+	}
+
+	@Test(expected = WeatherNotFoundException.class)
+	public void testKO() {
+
+		HourlyForecast hourlyForecast = getFixtureKO();
+		when(forecastConnector.getHourlyForecast()).thenReturn(hourlyForecast);
+		// when(builder.buildWeatherMessage(anyFloat(), any())).thenCallRealMethod();
+		when(builder.buildWeatherMessage(anyFloat(), any())).thenThrow(new WeatherNotFoundException());
+		launcher.notifyWeather();
 	}
 
 

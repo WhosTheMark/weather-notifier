@@ -3,6 +3,7 @@ package dev.whosthemark.weatherNotifier.message;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import dev.whosthemark.weatherNotifier.exception.WeatherNotFoundException;
 import dev.whosthemark.weatherNotifier.model.WeatherCondition;
 
 @Service
@@ -37,8 +38,7 @@ public class WeatherMessageBuilder {
 			result = "Il y aura de la pluie";
 			break;
 		case Snow:
-			result = "Il y aura de la neige";
-			break;
+			throw new WeatherNotFoundException();
 		case Thunderstorm:
 			result = "Il y aura des orages";
 			break;
