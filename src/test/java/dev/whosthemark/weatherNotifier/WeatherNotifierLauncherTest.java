@@ -8,8 +8,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -22,10 +20,9 @@ import dev.whosthemark.weatherNotifier.connectors.IFTTTWebhookConnector;
 import dev.whosthemark.weatherNotifier.connectors.WeatherForecastConnector;
 import dev.whosthemark.weatherNotifier.exception.WeatherNotFoundException;
 import dev.whosthemark.weatherNotifier.message.WeatherMessageBuilder;
-import dev.whosthemark.weatherNotifier.model.Forecast;
 import dev.whosthemark.weatherNotifier.model.HourlyForecast;
 import dev.whosthemark.weatherNotifier.model.Notification;
-import dev.whosthemark.weatherNotifier.model.WeatherCondition;
+
 
 public class WeatherNotifierLauncherTest {
 
@@ -49,30 +46,10 @@ public class WeatherNotifierLauncherTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	private HourlyForecast getFixtureOk() {
-		Forecast firstForecast = new Forecast(25f, WeatherCondition.Rain);
-		Forecast secondForecast = new Forecast(30f, WeatherCondition.Clear);
-		List<Forecast> forcasts = List.of(firstForecast, secondForecast);
-
-		HourlyForecast hourlyForecast = new HourlyForecast();
-		hourlyForecast.setForcasts(forcasts);
-		return hourlyForecast;
-	}
-
-	private HourlyForecast getFixtureKO() {
-		Forecast firstForecast = new Forecast(25f, WeatherCondition.Snow);
-		Forecast secondForecast = new Forecast(30f, WeatherCondition.Snow);
-		List<Forecast> forcasts = List.of(firstForecast, secondForecast);
-
-		HourlyForecast hourlyForecast = new HourlyForecast();
-		hourlyForecast.setForcasts(forcasts);
-		return hourlyForecast;
-	}
-
 	@Test
 	public void testOK() {
 
-		HourlyForecast hourlyForecast = getFixtureOk();
+		HourlyForecast hourlyForecast = TestFixtures.getFixtureOk();
 
 		when(forecastConnector.getHourlyForecast()).thenReturn(hourlyForecast);
 
@@ -103,7 +80,7 @@ public class WeatherNotifierLauncherTest {
 	@Test(expected = WeatherNotFoundException.class)
 	public void testKO() {
 
-		HourlyForecast hourlyForecast = getFixtureKO();
+		HourlyForecast hourlyForecast = TestFixtures.getFixtureKO();
 		when(forecastConnector.getHourlyForecast()).thenReturn(hourlyForecast);
 		// when(builder.buildWeatherMessage(anyFloat(), any())).thenCallRealMethod();
 		when(builder.buildWeatherMessage(anyFloat(), any())).thenThrow(new WeatherNotFoundException());

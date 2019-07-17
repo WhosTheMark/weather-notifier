@@ -10,7 +10,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.fasterxml.jackson.databind.node.DoubleNode;
 import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 
@@ -55,7 +54,7 @@ public class ForecastDeserializer extends StdDeserializer<Forecast> {
 
 	private float getTemperature(TreeNode node) {
 		var mainNode = node.get("main");
-		return (float) ((DoubleNode) mainNode.get("temp")).doubleValue();
+		return ((NumericNode) mainNode.get("temp")).floatValue();
 	}
 
 }
